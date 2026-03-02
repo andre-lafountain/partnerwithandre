@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Choose Your Hero Background</title>
+<style>
+body { font-family: 'Inter', sans-serif; background: #0a1628; color: white; padding: 20px; }
+h1 { text-align: center; margin-bottom: 40px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1200px; margin: 0 auto; }
+.option { position: relative; border-radius: 12px; overflow: hidden; border: 3px solid #333; }
+.option:hover { border-color: #e8722a; }
+.option video { width: 100%; display: block; }
+.label { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); padding: 16px; }
+.label h3 { margin: 0 0 4px; color: #e8722a; font-size: 1.2rem; }
+.label p { margin: 0; font-size: 0.9rem; color: #ccc; }
+.current { border-color: #e8722a; }
+.current::after { content: '★ CURRENT'; position: absolute; top: 12px; right: 12px; background: #e8722a; color: white; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.8rem; }
+@keyframes kenburns { 0% { transform: scale(1) translateX(0); } 100% { transform: scale(1.15) translateX(-3%); } }
+</style>
+</head>
+<body>
+<h1>🎬 Choose Your Hero Background Video</h1>
+<div class="grid">
+
+  <div class="option current">
+    <video autoplay muted loop playsinline><source src="images/hero-video.mp4" type="video/mp4"></video>
+    <div class="label">
+      <h3>Option A: Tampa Skyline (Current)</h3>
+      <p>Aerial of Tampa waterfront — skyline, marina, boats, blue water. ~2 hrs north of you.</p>
+    </div>
+  </div>
+
+  <div class="option">
+    <video autoplay muted loop playsinline><source src="images/opt2-17362433.mp4" type="video/mp4"></video>
+    <div class="label">
+      <h3>Option B: Cape Coral Canal</h3>
+      <p>Residential canal with palm trees, boats docked, waterfront homes. Looks exactly like your area — Cape Coral/Punta Gorda style. Sunrise/sunset.</p>
+    </div>
+  </div>
+
+  <div class="option">
+    <div style="position:relative; overflow:hidden; width:100%; aspect-ratio:16/9;">
+      <img src="images/babcock-ranch.jpg" style="width:110%; height:110%; object-fit:cover; animation: kenburns 20s ease-in-out infinite alternate;">
+    </div>
+    <div class="label">
+      <h3>Option C: Babcock Ranch Sunset 🏠</h3>
+      <p>YOUR photo! Babcock Lake at sunset with the tower, palm trees silhouetted. Right where you live. Animated with a slow pan effect.</p>
+    </div>
+  </div>
+
+  <div class="option">
+    <video autoplay muted loop playsinline><source src="images/opt-15978824.mp4" type="video/mp4"></video>
+    <div class="label">
+      <h3>Option D: Beach Coastline Aerial</h3>
+      <p>Aerial drone along turquoise beach. Umbrellas, palm trees, hotels. Vibrant coastal Florida feel.</p>
+    </div>
+  </div>
+
+  <div class="option">
+    <div style="position:relative; overflow:hidden; width:100%; aspect-ratio:16/9;">
+      <img src="images/babcock-ranch2.jpg" style="width:110%; height:110%; object-fit:cover; animation: kenburns 20s ease-in-out infinite alternate;">
+    </div>
+    <div class="label">
+      <h3>Option E: Babcock Ranch Wide Sunset 🌅</h3>
+      <p>YOUR photo! Wide view of Babcock Lake, tower lit up, palm tree on the right, stunning orange sky. Animated pan effect.</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
