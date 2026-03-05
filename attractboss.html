@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andre LaFountain | Agent Attraction Coaching</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #c9a227;
+  --gold-light: #e8d06f;
+  --gold-dark: #a68521;
+  --dark: #0a0a0f;
+  --dark-card: #12121a;
+  --dark-section: #0e0e16;
+  --white: #ffffff;
+  --gray: #b0b0b0;
+  --accent-blue: #1a3a6b;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--dark);
+  color: var(--white);
+  overflow-x: hidden;
+}
+.gold-text { color: var(--gold); }
+.gold-bg { background: linear-gradient(135deg, var(--gold), var(--gold-light)); }
+
+/* NAV */
+nav {
+  position: fixed; top:0; width:100%; z-index:100;
+  background: rgba(10,10,15,0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(201,162,39,0.15);
+  padding: 15px 40px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.nav-brand {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.6rem; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase;
+}
+.nav-brand span { color: var(--gold); }
+.nav-links { display:flex; gap:30px; list-style:none; }
+.nav-links a {
+  color: var(--gray); text-decoration:none; font-size:0.85rem;
+  letter-spacing:1px; text-transform:uppercase; font-weight:500;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--gold); }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  background: 
+    radial-gradient(ellipse at 30% 20%, rgba(201,162,39,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(26,58,107,0.1) 0%, transparent 50%),
+    var(--dark);
+  padding: 120px 20px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content:''; position:absolute; inset:0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"><rect fill="none" width="60" height="60"/><path d="M0 30h60M30 0v60" stroke="rgba(201,162,39,0.04)" stroke-width="1"/></svg>');
+}
+.hero-content { position:relative; z-index:1; max-width:900px; }
+.hero-badge {
+  display: inline-block;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  padding: 8px 24px;
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+.hero h1 {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.hero h1 .outline {
+  -webkit-text-stroke: 2px var(--gold);
+  color: transparent;
+}
+.hero h2 {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  font-weight: 400;
+  color: var(--gray);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.hero-subtitle {
+  font-size: 1.1rem;
+  color: var(--gray);
+  line-height: 1.8;
+  max-width: 700px;
+  margin: 0 auto 40px;
+}
+.hero-stat {
+  display: inline-flex; align-items: center; gap:12px;
+  background: rgba(201,162,39,0.1);
+  border: 1px solid rgba(201,162,39,0.3);
+  padding: 12px 28px;
+  margin-bottom: 40px;
+  font-family: 'Oswald', sans-serif;
+}
+.hero-stat .number {
+  font-size: 2.5rem; font-weight:700; color: var(--gold);
+}
+.hero-stat .label {
+  font-size: 0.8rem; letter-spacing:2px; text-transform:uppercase; color:var(--gray);
+  text-align: left; line-height:1.4;
+}
+.cta-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: var(--dark);
+  padding: 18px 50px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s;
+  border: none; cursor:pointer;
+}
+.cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px rgba(201,162,39,0.3);
+}
+.cta-btn-outline {
+  background: transparent;
+  border: 2px solid var(--gold);
+  color: var(--gold);
+  margin-left: 15px;
+}
+.cta-btn-outline:hover {
+  background: var(--gold);
+  color: var(--dark);
+}
+
+/* HEADSHOT SECTION */
+.about-section {
+  padding: 100px 20px;
+  background: var(--dark-section);
+  position: relative;
+}
+.about-container {
+  max-width: 1100px; margin:0 auto;
+  display: grid; grid-template-columns: 1fr 1.2fr; gap:60px;
+  align-items: center;
+}
+.headshot-wrapper {
+  position: relative;
+}
+.headshot-wrapper::before {
+  content:''; position:absolute;
+  top: -15px; left: -15px; right: 15px; bottom: 15px;
+  border: 2px solid var(--gold);
+  z-index:0;
+}
+.headshot-wrapper img {
+  width: 100%; display:block; position:relative; z-index:1;
+  filter: grayscale(20%);
+}
+.about-content h3 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.9rem; letter-spacing:4px; text-transform:uppercase;
+  color: var(--gold); margin-bottom:15px;
+}
+.about-content h2 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 2.8rem; font-weight:700;
+  line-height:1.1; margin-bottom:25px;
+}
+.about-content p {
+  color: var(--gray); line-height:1.8; margin-bottom:20px;
+}
+.stat-row {
+  display:flex; gap:40px; margin-top:30px;
+}
+.stat-item .stat-num {
+  font-family:'Oswald',sans-serif;
+  font-size:2.5rem; font-weight:700; color:var(--gold);
+}
+.stat-item .stat-label {
+  font-size:0.75rem; letter-spacing:2px; text-transform:uppercase;
+  color:var(--gray);
+}
+
+/* PRICING */
+.pricing-section {
+  padding: 100px 20px;
+  background: var(--dark);
+  text-align: center;
+}
+.section-tag {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.8rem; letter-spacing:4px; text-transform:uppercase;
+  color: var(--gold); margin-bottom:15px;
+}
+.section-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight:700; margin-bottom:15px;
+}
+.section-sub {
+  color:var(--gray); max-width:600px; margin:0 auto 60px; line-height:1.7;
+}
+.pricing-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px; max-width:800px; margin:0 auto;
+}
+.price-card {
+  background: var(--dark-card);
+  border: 1px solid rgba(201,162,39,0.15);
+  padding: 50px 35px;
+  position:relative;
+  transition: all 0.3s;
+}
+.price-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-5px);
+}
+.price-card.featured {
+  border-color: var(--gold);
+  box-shadow: 0 0 60px rgba(201,162,39,0.1);
+}
+.price-card.featured::before {
+  content: 'BEST VALUE';
+  position:absolute; top:0; left:50%; transform:translate(-50%,-50%);
+  background: var(--gold); color:var(--dark);
+  padding:6px 20px; font-size:0.7rem; font-weight:700; letter-spacing:2px;
+}
+.price-amount {
+  font-family:'Oswald',sans-serif;
+  font-size: 3.5rem; font-weight:700; color:var(--gold);
+}
+.price-period {
+  color:var(--gray); font-size:0.85rem; margin-bottom:25px;
+}
+.price-features { list-style:none; text-align:left; margin-bottom:35px; }
+.price-features li {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  color: var(--gray);
+  font-size: 0.9rem;
+}
+.price-features li::before {
+  content:'✦'; color:var(--gold); margin-right:10px;
+}
+
+/* BOSS ACRONYM */
+.boss-section {
+  padding: 100px 20px;
+  background: var(--dark-section);
+  text-align:center;
+}
+.boss-grid {
+  display:grid; grid-template-columns: repeat(4,1fr);
+  gap:30px; max-width:1000px; margin:40px auto 0;
+}
+.boss-card {
+  padding:40px 20px;
+  border: 1px solid rgba(201,162,39,0.1);
+  background: rgba(18,18,26,0.8);
+  transition: all 0.3s;
+}
+.boss-card:hover { border-color:var(--gold); }
+.boss-letter {
+  font-family:'Oswald',sans-serif;
+  font-size:4rem; font-weight:700; color:var(--gold);
+  line-height:1;
+}
+.boss-word {
+  font-family:'Oswald',sans-serif;
+  font-size:1rem; letter-spacing:3px; text-transform:uppercase;
+  margin-top:10px;
+}
+
+/* COACHING */
+.coaching-section {
+  padding: 100px 20px;
+  background: var(--dark);
+}
+.coaching-grid {
+  display:grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+  gap:25px; max-width:1100px; margin:0 auto;
+}
+.coaching-card {
+  background: var(--dark-card);
+  border: 1px solid rgba(201,162,39,0.1);
+  padding:35px 30px;
+  transition: all 0.3s;
+}
+.coaching-card:hover { border-color:var(--gold); transform:translateY(-3px); }
+.coaching-icon {
+  font-size:2rem; margin-bottom:15px;
+}
+.coaching-card h3 {
+  font-family:'Oswald',sans-serif;
+  font-size:1.1rem; letter-spacing:2px;
+  text-transform:uppercase; margin-bottom:12px;
+}
+.coaching-card p {
+  color:var(--gray); font-size:0.9rem; line-height:1.7;
+}
+
+/* TESTIMONIALS */
+.testimonials-section {
+  padding: 100px 20px;
+  background: var(--dark-section);
+  text-align:center;
+}
+.testimonial-card {
+  max-width:700px; margin:40px auto;
+  padding:50px;
+  background: var(--dark-card);
+  border: 1px solid rgba(201,162,39,0.15);
+  position:relative;
+}
+.testimonial-card::before {
+  content:'"'; font-family:'Oswald',sans-serif;
+  font-size:8rem; color:rgba(201,162,39,0.1);
+  position:absolute; top:-20px; left:20px; line-height:1;
+}
+.testimonial-card p {
+  font-style:italic; color:var(--gray); line-height:1.8;
+  font-size:1.05rem; position:relative; z-index:1;
+}
+.testimonial-card .author {
+  margin-top:20px; font-style:normal;
+  color:var(--gold); font-weight:600;
+}
+
+/* FAQ */
+.faq-section {
+  padding: 100px 20px;
+  background: var(--dark);
+}
+.faq-list { max-width:800px; margin:0 auto; }
+.faq-item {
+  border-bottom: 1px solid rgba(201,162,39,0.1);
+  padding: 25px 0;
+}
+.faq-q {
+  font-family:'Oswald',sans-serif;
+  font-size:1.1rem; letter-spacing:1px;
+  cursor:pointer; display:flex; justify-content:space-between; align-items:center;
+}
+.faq-q::after { content:'+'; color:var(--gold); font-size:1.5rem; }
+.faq-q.active::after { content:'−'; }
+.faq-a {
+  color:var(--gray); line-height:1.8; font-size:0.9rem;
+  max-height:0; overflow:hidden; transition: max-height 0.4s ease;
+  padding-top:0;
+}
+.faq-a.open { max-height:300px; padding-top:15px; }
+
+/* CTA BANNER */
+.cta-section {
+  padding: 100px 20px;
+  background: linear-gradient(135deg, rgba(201,162,39,0.1), rgba(26,58,107,0.15));
+  text-align:center;
+}
+.cta-section h2 {
+  font-family:'Oswald',sans-serif;
+  font-size: clamp(2rem,5vw,3.5rem);
+  font-weight:700; margin-bottom:20px;
+}
+.cta-section p {
+  color:var(--gray); max-width:600px; margin:0 auto 40px; line-height:1.8;
+}
+
+/* FOOTER */
+footer {
+  background: var(--dark-card);
+  border-top: 1px solid rgba(201,162,39,0.1);
+  padding: 40px 20px;
+  text-align:center;
+  color:var(--gray); font-size:0.8rem;
+}
+footer .social-links { margin-bottom:20px; }
+footer .social-links a {
+  color:var(--gray); text-decoration:none; margin:0 12px;
+  font-size:0.85rem; letter-spacing:1px;
+  transition: color 0.3s;
+}
+footer .social-links a:hover { color:var(--gold); }
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(30px); }
+  to { opacity:1; transform:translateY(0); }
+}
+.fade-up {
+  opacity:0; animation: fadeUp 0.8s ease forwards;
+}
+.fade-up:nth-child(2) { animation-delay:0.1s; }
+.fade-up:nth-child(3) { animation-delay:0.2s; }
+.fade-up:nth-child(4) { animation-delay:0.3s; }
+
+/* RESPONSIVE */
+@media(max-width:768px) {
+  nav { padding:12px 20px; }
+  .nav-links { display:none; }
+  .about-container { grid-template-columns:1fr; }
+  .boss-grid { grid-template-columns: repeat(2,1fr); }
+  .pricing-grid { grid-template-columns:1fr; }
+  .stat-row { gap:20px; }
+  .cta-btn-outline { margin-left:0; margin-top:10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Andre <span>LaFountain</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#coaching">Coaching</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#join" class="gold-text">Join Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">eXp Realty Agent Attraction</div>
+    <h1>ATTRACT<br><span class="outline">LIKE A BOSS</span></h1>
+    <h2>Agent Attraction Coaching &amp; Inner Circle</h2>
+    <div class="hero-stat">
+      <span class="number">1,300+</span>
+      <span class="label">Agents in<br>Organization</span>
+    </div>
+    <p class="hero-subtitle">
+      Join a proven coaching system built by someone who's actually done it.
+      Real strategies. Real results. Real growth.
+    </p>
+    <a href="#pricing" class="cta-btn">Get Started</a>
+    <a href="#about" class="cta-btn cta-btn-outline">Learn More</a>
+  </div>
+</section>
+
+<!-- ABOUT / HEADSHOT -->
+<section class="about-section" id="about">
+  <div class="about-container">
+    <div class="headshot-wrapper">
+      <img src="../partnerwithandre/images/headshot.jpg" alt="Andre LaFountain">
+    </div>
+    <div class="about-content">
+      <h3>Meet Your Coach</h3>
+      <h2>Andre<br>LaFountain</h2>
+      <p>
+        With over <strong class="gold-text">1,300 agents</strong> in his organization, Andre LaFountain
+        has built one of the largest and most successful agent attraction businesses at eXp Realty.
+        Based in Punta Gorda, Florida, Andre brings real-world experience, proven systems, and
+        a relentless commitment to helping agents build passive income through revenue share.
+      </p>
+      <p>
+        This isn't theory — it's what Andre does every single day. If you're ready to stop guessing
+        and start growing, you're in the right place.
+      </p>
+      <div class="stat-row">
+        <div class="stat-item">
+          <div class="stat-num">1,300+</div>
+          <div class="stat-label">Agents</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">6+</div>
+          <div class="stat-label">Figure Rev Share</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">10+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOSS ACRONYM -->
+<section class="boss-section">
+  <div class="section-tag">The BOSS Mindset</div>
+  <div class="section-title">Join the <span class="gold-text">BOSS</span> Community</div>
+  <div class="boss-grid">
+    <div class="boss-card fade-up">
+      <div class="boss-letter">B</div>
+      <div class="boss-word">Badass</div>
+    </div>
+    <div class="boss-card fade-up">
+      <div class="boss-letter">O</div>
+      <div class="boss-word">Opportunity</div>
+    </div>
+    <div class="boss-card fade-up">
+      <div class="boss-letter">S</div>
+      <div class="boss-word">Systems</div>
+    </div>
+    <div class="boss-card fade-up">
+      <div class="boss-letter">S</div>
+      <div class="boss-word">Supplied</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="section-tag">Investment</div>
+  <div class="section-title">Choose Your <span class="gold-text">Plan</span></div>
+  <p class="section-sub">Flexible options to fit where you are right now. Both plans give you full access to the coaching inner circle.</p>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-amount">$197</div>
+      <div class="price-period">Per Month — Flex Pay</div>
+      <ul class="price-features">
+        <li>Full access for 30 days to explore</li>
+        <li>Strictly for eXp agents focused on attraction</li>
+        <li>Cancel anytime — no commitment</li>
+        <li>The most affordable way to join</li>
+      </ul>
+      <a href="#join" class="cta-btn" style="width:100%;text-align:center;">Monthly Plan</a>
+    </div>
+    <div class="price-card featured">
+      <div class="price-amount">$1,897</div>
+      <div class="price-period">Annual Plan — Save $467</div>
+      <ul class="price-features">
+        <li>Earn $400 cash on referrals</li>
+        <li>Annual access to BOSS community</li>
+        <li>The Owners Club — full access + discounts</li>
+        <li>Attract Boss SWAG bag upon acceptance</li>
+      </ul>
+      <a href="#join" class="cta-btn" style="width:100%;text-align:center;">Annual Plan</a>
+    </div>
+  </div>
+</section>
+
+<!-- COACHING INCLUDES -->
+<section class="coaching-section" id="coaching">
+  <div style="text-align:center; margin-bottom:60px;">
+    <div class="section-tag">What You Get</div>
+    <div class="section-title">Your Membership <span class="gold-text">Includes</span></div>
+  </div>
+  <div class="coaching-grid">
+    <div class="coaching-card">
+      <div class="coaching-icon">📞</div>
+      <h3>Live Coaching Calls</h3>
+      <p>Weekly LIVE training with certified coaches and guest leaders from eXp. Real talk, real strategy, real results.</p>
+    </div>
+    <div class="coaching-card">
+      <div class="coaching-icon">🎯</div>
+      <h3>Q&A & Role Play</h3>
+      <p>Get your exact questions answered on live calls. Practice your pitch, master objections, and sharpen your skills.</p>
+    </div>
+    <div class="coaching-card">
+      <div class="coaching-icon">📊</div>
+      <h3>Lunch eXplained Calls</h3>
+      <p>Weekly calls where leaders present the eXp model. Invite your prospects and learn how the pros lead these calls.</p>
+    </div>
+    <div class="coaching-card">
+      <div class="coaching-icon">🤝</div>
+      <h3>3-Way Coach Calls</h3>
+      <p>Schedule private 3-way calls with coaches for your prospects. We operate like your upline and support system.</p>
+    </div>
+    <div class="coaching-card">
+      <div class="coaching-icon">⚙️</div>
+      <h3>CRM Mastery</h3>
+      <p>High-level attraction with Go High Level, KV-Bold Trails, and Lofty. Automation, VA dialing, duplicatable processes.</p>
+    </div>
+    <div class="coaching-card">
+      <div class="coaching-icon">👥</div>
+      <h3>24/7 Community</h3>
+      <p>Private community access with elite entrepreneurs. Resources, tools, shortcuts, and strategic partnerships at your fingertips.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="section-tag">Success Stories</div>
+  <div class="section-title">What Members <span class="gold-text">Say</span></div>
+  <div class="testimonial-card">
+    <p>This coaching changed my entire approach to agent attraction. Within 6 months, I went from 0 to 47 agents in my organization. The systems, the support, the accountability — it's unlike anything else out there.</p>
+    <div class="author">— eXp Agent, Florida</div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div style="text-align:center; margin-bottom:60px;">
+    <div class="section-tag">Questions</div>
+    <div class="section-title">Got <span class="gold-text">Questions?</span></div>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What do I get in the coaching program?</div>
+      <div class="faq-a">Weekly LIVE attraction calls with Andre and guest coaches, one-on-one coaching sessions, CRM setup and automation support, 3-way calls for your prospects, and 24/7 access to the private BOSS community.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Does it matter what organization or team I'm with at eXp?</div>
+      <div class="faq-a">Not at all! This coaching is organization and team-agnostic. As long as you're an active eXp agent, you can join. You'll be coached and supported like family.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">I'm just starting and have zero in my downline. Is this for me?</div>
+      <div class="faq-a">Absolutely — if anything, you're in the best position. Starting your wealth-building journey with proven systems and mentorship from day one? That's an advantage most people wish they had.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What if I can't afford it right now?</div>
+      <div class="faq-a">We get it — we've been there. The $197/month plan is designed to be accessible. Plus, we have a referral program where you earn $400 cash for each annual referral. We also offer a no-questions-asked full refund in your first 30 days.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Why should I choose this over cheaper options?</div>
+      <div class="faq-a">This isn't just a group — it's a proven system backed by a leader with 1,300+ agents. There's no other program with this level of hands-on tactical tools, real results, and direct access to coaches who make 6-figure residual income. Do your due diligence — we're confident you won't find better.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="join">
+  <div class="section-tag">Enrollment Is Open</div>
+  <h2>Ready to Build <span class="gold-text">Like a Boss?</span></h2>
+  <p>Stop guessing. Start growing. Join Andre's coaching inner circle and get the systems, strategies, and support you need to build a massive organization.</p>
+  <a href="#pricing" class="cta-btn">Join Now</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="social-links">
+    <a href="#">Facebook</a>
+    <a href="#">Instagram</a>
+    <a href="#">YouTube</a>
+    <a href="#">LinkedIn</a>
+  </div>
+  <p>&copy; 2026 Andre LaFountain — Agent Attraction Coaching. All rights reserved.</p>
+  <p style="margin-top:8px; font-size:0.7rem;">eXp Realty — Punta Gorda, Florida</p>
+</footer>
+
+<script>
+function toggleFaq(el) {
+  el.classList.toggle('active');
+  el.nextElementSibling.classList.toggle('open');
+}
+
+// Intersection Observer for fade-up
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) { e.target.style.animationPlayState='running'; }
+  });
+}, { threshold:0.1 });
+document.querySelectorAll('.fade-up').forEach(el => {
+  el.style.animationPlayState='paused';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
