@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andre LaFountain | Agent Attraction Coaching & Inner Circle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #d4a843;
+  --gold-light: #f0d078;
+  --gold-dark: #b08a2a;
+  --gold-glow: rgba(212,168,67,0.25);
+  --dark-bg: #07070c;
+  --dark-card: #0f0f18;
+  --dark-surface: #141422;
+  --dark-elevated: #1a1a2e;
+  --white: #f5f5f7;
+  --gray: #9a9ab0;
+  --gray-light: #c8c8d8;
+  --border: rgba(212,168,67,0.12);
+  --glass: rgba(20,20,34,0.65);
+  --glass-border: rgba(212,168,67,0.15);
+  --radius: 20px;
+  --radius-sm: 12px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--dark-bg);
+  color: var(--white);
+  overflow-x: hidden;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--dark-bg); }
+::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 4px; }
+
+/* ── UTILITIES ── */
+.gold { color: var(--gold); }
+.section-pad { padding: 120px 24px; }
+.container { max-width: 1200px; margin: 0 auto; }
+.label {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+  background: rgba(212,168,67,0.08);
+  padding: 6px 18px;
+  border-radius: 50px;
+  border: 1px solid rgba(212,168,67,0.15);
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+.section-sub {
+  font-size: 1.05rem;
+  color: var(--gray);
+  max-width: 620px;
+  line-height: 1.8;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(40px); }
+  to { opacity:1; transform:translateY(0); }
+}
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes glow-pulse {
+  0%,100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 1000;
+  background: rgba(7,7,12,0.85);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  height: 72px;
+  display: flex; justify-content: space-between; align-items: center;
+  transition: all 0.3s ease;
+}
+nav.scrolled {
+  height: 60px;
+  background: rgba(7,7,12,0.95);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+}
+.nav-brand {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem; font-weight: 800;
+  letter-spacing: 2px; text-transform: uppercase;
+}
+.nav-links { display:flex; gap:32px; list-style:none; align-items:center; }
+.nav-links a {
+  color: var(--gray); text-decoration:none; font-size:0.78rem;
+  letter-spacing: 1.5px; text-transform:uppercase; font-weight: 600;
+  transition: color 0.3s; position: relative;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-links a::after {
+  content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px;
+  background: var(--gold); transition: width 0.3s;
+}
+.nav-links a:hover::after { width:100%; }
+.nav-cta {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: #000 !important; padding: 10px 24px; border-radius: 50px;
+  font-weight: 700 !important; letter-spacing: 1px !important;
+  transition: all 0.3s !important; box-shadow: 0 4px 20px var(--gold-glow);
+}
+.nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--gold-glow); }
+.nav-cta::after { display:none !important; }
+.hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:8px; }
+.hamburger span { width:24px; height:2px; background:var(--white); transition:all 0.3s; border-radius:2px; }
+.hamburger.active span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+.hamburger.active span:nth-child(2) { opacity:0; }
+.hamburger.active span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  position: relative;
+  padding: 120px 24px 80px;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset:0; z-index:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 20%, rgba(212,168,67,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(26,26,46,0.8) 0%, transparent 60%),
+    var(--dark-bg);
+}
+.hero-particles {
+  position:absolute; inset:0; z-index:1; overflow:hidden;
+}
+.particle {
+  position:absolute; border-radius:50%;
+  background: radial-gradient(circle, var(--gold-glow), transparent);
+  animation: float 6s ease-in-out infinite, glow-pulse 4s ease-in-out infinite;
+}
+.hero .container {
+  position:relative; z-index:2;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+.hero-content { animation: fadeUp 1s ease-out; }
+.hero-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  background: rgba(212,168,67,0.08); border:1px solid rgba(212,168,67,0.2);
+  border-radius:50px; padding:8px 20px; margin-bottom:28px;
+  font-size:0.75rem; font-weight:600; letter-spacing:2px; text-transform:uppercase;
+  color:var(--gold);
+}
+.hero-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--gold); animation: glow-pulse 2s infinite; }
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 6vw, 4.8rem);
+  font-weight: 700; line-height: 1.08; margin-bottom: 24px;
+}
+.hero h1 em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero p {
+  font-size: 1.1rem; color: var(--gray-light); max-width: 480px;
+  margin-bottom: 40px; line-height: 1.8;
+}
+.hero-btns { display:flex; gap:16px; flex-wrap:wrap; }
+.btn-primary {
+  display:inline-flex; align-items:center; gap:8px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: #000; padding: 16px 36px; border-radius: 50px;
+  font-weight: 700; font-size: 0.9rem; letter-spacing: 1px;
+  text-decoration:none; text-transform:uppercase;
+  transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+  box-shadow: 0 8px 32px var(--gold-glow);
+  border:none; cursor:pointer;
+}
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(212,168,67,0.4);
+}
+.btn-outline {
+  display:inline-flex; align-items:center; gap:8px;
+  background: transparent; color: var(--white);
+  padding: 16px 36px; border-radius: 50px;
+  font-weight: 600; font-size: 0.9rem; letter-spacing: 1px;
+  text-decoration:none; text-transform:uppercase;
+  border: 1px solid rgba(255,255,255,0.15);
+  transition: all 0.3s; cursor:pointer;
+}
+.btn-outline:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(212,168,67,0.05);
+}
+.hero-stats {
+  display:flex; gap:40px; margin-top:48px; padding-top:32px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.hero-stat h3 {
+  font-size: 2rem; font-weight: 800;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.hero-stat p { font-size:0.78rem; color:var(--gray); text-transform:uppercase; letter-spacing:1px; margin-top:4px; }
+
+/* Hero Image */
+.hero-image {
+  position: relative;
+  display: flex; justify-content: center; align-items: center;
+  animation: fadeUp 1.2s ease-out 0.3s both;
+}
+.hero-image-wrapper {
+  position: relative; width: 380px; height: 460px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.6), 0 0 60px var(--gold-glow);
+}
+.hero-image-wrapper img {
+  width:100%; height:100%; object-fit:cover; object-position: top center;
+}
+.hero-image-glow {
+  position:absolute; width:300px; height:300px; border-radius:50%;
+  background: radial-gradient(circle, rgba(212,168,67,0.15), transparent 70%);
+  top:50%; left:50%; transform:translate(-50%,-50%);
+  z-index:-1; animation: glow-pulse 4s ease-in-out infinite;
+}
+
+/* ── ABOUT ── */
+.about { background: var(--dark-card); }
+.about .container {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+.about-image {
+  position:relative; border-radius: var(--radius);
+  overflow:hidden; aspect-ratio: 4/5;
+  border: 1px solid var(--border);
+}
+.about-image img { width:100%; height:100%; object-fit:cover; object-position:top; }
+.about-content .section-sub { margin-bottom: 32px; }
+.about-list { list-style:none; display:flex; flex-direction:column; gap:16px; }
+.about-list li {
+  display:flex; align-items:flex-start; gap:14px;
+  font-size: 0.95rem; color: var(--gray-light);
+}
+.about-list .icon {
+  width:28px; height:28px; border-radius:8px; flex-shrink:0;
+  background: rgba(212,168,67,0.1); border:1px solid rgba(212,168,67,0.2);
+  display:flex; align-items:center; justify-content:center;
+  color: var(--gold); font-size:0.85rem; margin-top:2px;
+}
+
+/* ── MILESTONES ── */
+.milestones-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+  margin-top: 60px;
+}
+.milestone-card {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  padding: 44px 32px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.milestone-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(212,168,67,0.3);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 40px var(--gold-glow);
+}
+.milestone-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+  background-size: 200% 100%;
+  animation: gradient-shift 4s ease infinite;
+  opacity:0; transition: opacity 0.3s;
+}
+.milestone-card:hover::before { opacity:1; }
+.milestone-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem; font-weight: 700;
+  background: linear-gradient(135deg, rgba(212,168,67,0.2), rgba(212,168,67,0.05));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  line-height:1; margin-bottom:20px;
+}
+.milestone-card h3 {
+  font-size: 1.25rem; font-weight: 700; margin-bottom: 14px;
+}
+.milestone-card p { font-size: 0.92rem; color: var(--gray); line-height: 1.7; }
+
+/* ── FEATURES / WHAT YOU GET ── */
+.features { background: var(--dark-card); }
+.features-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 24px;
+  margin-top: 60px;
+}
+.feature-card {
+  background: var(--dark-surface);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: var(--radius-sm);
+  padding: 36px 28px;
+  transition: all 0.3s;
+}
+.feature-card:hover {
+  border-color: var(--border);
+  background: var(--dark-elevated);
+}
+.feature-icon {
+  width:52px; height:52px; border-radius:14px;
+  background: rgba(212,168,67,0.08);
+  border:1px solid rgba(212,168,67,0.15);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.4rem; margin-bottom:20px;
+}
+.feature-card h4 { font-size:1.05rem; font-weight:700; margin-bottom:10px; }
+.feature-card p { font-size:0.88rem; color:var(--gray); line-height:1.7; }
+
+/* ── PRICING ── */
+.pricing-grid {
+  display: grid; grid-template-columns: repeat(2,1fr); gap: 32px;
+  max-width: 800px; margin: 60px auto 0;
+}
+.price-card {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  padding: 48px 40px;
+  position:relative; overflow:hidden;
+  transition: all 0.4s;
+}
+.price-card.featured {
+  border-color: var(--gold);
+  box-shadow: 0 0 60px var(--gold-glow);
+}
+.price-card.featured::before {
+  content:'BEST VALUE'; position:absolute; top:20px; right:-30px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color:#000; font-size:0.65rem; font-weight:800; letter-spacing:2px;
+  padding:6px 40px; transform:rotate(45deg);
+}
+.price-card:hover { transform:translateY(-4px); }
+.price-label {
+  font-size:0.75rem; font-weight:700; letter-spacing:3px;
+  text-transform:uppercase; color:var(--gold); margin-bottom:20px;
+}
+.price-amount {
+  font-size: 3.5rem; font-weight: 800; line-height:1;
+  margin-bottom: 8px;
+}
+.price-amount span { font-size:1rem; color:var(--gray); font-weight:400; }
+.price-save {
+  display:inline-block; background:rgba(212,168,67,0.1);
+  color:var(--gold); padding:4px 14px; border-radius:50px;
+  font-size:0.75rem; font-weight:600; margin-bottom:28px;
+}
+.price-features { list-style:none; margin-bottom:36px; }
+.price-features li {
+  padding: 10px 0; font-size:0.9rem; color:var(--gray-light);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  display:flex; align-items:center; gap:10px;
+}
+.price-features li::before { content:'✓'; color:var(--gold); font-weight:700; }
+.price-btn {
+  display:block; text-align:center; width:100%;
+  padding: 16px; border-radius:50px; font-weight:700;
+  font-size:0.9rem; letter-spacing:1px; text-transform:uppercase;
+  text-decoration:none; transition: all 0.3s; cursor:pointer; border:none;
+}
+.price-btn.primary {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color:#000; box-shadow: 0 8px 30px var(--gold-glow);
+}
+.price-btn.primary:hover { box-shadow: 0 12px 40px rgba(212,168,67,0.4); transform:translateY(-2px); }
+.price-btn.outline {
+  background:transparent; color:var(--white);
+  border:1px solid rgba(255,255,255,0.15);
+}
+.price-btn.outline:hover { border-color:var(--gold); color:var(--gold); }
+
+/* ── TESTIMONIALS ── */
+.testimonials { background: var(--dark-card); }
+.testimonials-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:28px; margin-top:60px;
+}
+.testimonial-card {
+  background: var(--dark-surface);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: var(--radius-sm);
+  padding: 36px 28px;
+}
+.testimonial-stars { color: var(--gold); font-size:0.9rem; margin-bottom:16px; letter-spacing:2px; }
+.testimonial-card blockquote {
+  font-size: 0.92rem; color: var(--gray-light); line-height:1.8;
+  font-style:italic; margin-bottom:20px;
+}
+.testimonial-author { display:flex; align-items:center; gap:12px; }
+.testimonial-avatar {
+  width:40px; height:40px; border-radius:50%;
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+  display:flex; align-items:center; justify-content:center;
+  font-weight:700; color:#000; font-size:0.85rem;
+}
+.testimonial-name { font-size:0.85rem; font-weight:600; }
+.testimonial-role { font-size:0.75rem; color:var(--gray); }
+
+/* ── FAQ ── */
+.faq-list { max-width:720px; margin:60px auto 0; }
+.faq-item {
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.faq-q {
+  width:100%; background:none; border:none; color:var(--white);
+  font-family:'Inter',sans-serif; font-size:1.05rem; font-weight:600;
+  padding:24px 0; cursor:pointer; text-align:left;
+  display:flex; justify-content:space-between; align-items:center;
+  transition: color 0.3s;
+}
+.faq-q:hover { color: var(--gold); }
+.faq-q .arrow {
+  font-size:1.2rem; transition: transform 0.3s; color:var(--gold);
+}
+.faq-item.open .faq-q .arrow { transform: rotate(180deg); }
+.faq-a {
+  max-height:0; overflow:hidden; transition: max-height 0.4s ease, padding 0.4s ease;
+}
+.faq-item.open .faq-a { max-height:300px; padding-bottom:24px; }
+.faq-a p { font-size:0.92rem; color:var(--gray); line-height:1.8; }
+
+/* ── CTA ── */
+.final-cta {
+  background: var(--dark-card);
+  text-align:center;
+  position:relative; overflow:hidden;
+}
+.final-cta::before {
+  content:''; position:absolute; inset:0;
+  background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(212,168,67,0.06), transparent);
+}
+.final-cta .container { position:relative; z-index:1; }
+.final-cta .section-sub { margin: 0 auto 40px; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--dark-bg);
+  border-top: 1px solid rgba(255,255,255,0.04);
+  padding: 40px 24px;
+  text-align:center;
+}
+footer p { font-size:0.8rem; color:var(--gray); }
+footer a { color:var(--gold); text-decoration:none; }
+
+/* ── MOBILE ── */
+@media (max-width: 968px) {
+  .hero .container { grid-template-columns:1fr; gap:48px; text-align:center; }
+  .hero p { margin:0 auto 40px; }
+  .hero-btns { justify-content:center; }
+  .hero-stats { justify-content:center; }
+  .hero-image { order:-1; }
+  .hero-image-wrapper { width:280px; height:340px; }
+  .about .container { grid-template-columns:1fr; gap:40px; }
+  .about-image { max-width:400px; margin:0 auto; }
+  .milestones-grid { grid-template-columns:1fr; max-width:480px; margin:60px auto 0; }
+  .features-grid { grid-template-columns:1fr; max-width:480px; margin:60px auto 0; }
+  .pricing-grid { grid-template-columns:1fr; max-width:420px; }
+  .testimonials-grid { grid-template-columns:1fr; max-width:480px; margin:60px auto 0; }
+  .nav-links { display:none; }
+  .nav-links.open {
+    display:flex; flex-direction:column; position:absolute;
+    top:72px; left:0; right:0; background:rgba(7,7,12,0.98);
+    backdrop-filter:blur(24px); padding:24px; gap:20px;
+    border-bottom:1px solid var(--border);
+  }
+  .hamburger { display:flex; }
+}
+@media (max-width: 480px) {
+  .section-pad { padding: 80px 16px; }
+  .hero { padding: 100px 16px 60px; }
+  nav { padding: 0 20px; }
+  .price-card { padding: 36px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-brand"><span>Andre</span> LaFountain</div>
+  <div class="hamburger" onclick="this.classList.toggle('active');document.querySelector('.nav-links').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#milestones">Process</a></li>
+    <li><a href="#features">Benefits</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#pricing" class="nav-cta">Join Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-particles" id="particles"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge"><span class="dot"></span> eXp Realty Agent Attraction</div>
+      <h1>Attract<br><em>Like a Boss</em></h1>
+      <p>Join a proven coaching system built by someone who's actually done it. Real strategies. Real results. Real growth. No cost, no additional splits.</p>
+      <div class="hero-btns">
+        <a href="#pricing" class="btn-primary">Get Started →</a>
+        <a href="#about" class="btn-outline">Learn More</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><h3>1,300+</h3><p>Agents Coached</p></div>
+        <div class="hero-stat"><h3>6+</h3><p>Years Coaching</p></div>
+        <div class="hero-stat"><h3>10+</h3><p>Years in Real Estate</p></div>
+      </div>
+    </div>
+    <div class="hero-image">
+      <div class="hero-image-glow"></div>
+      <div class="hero-image-wrapper">
+        <img src="images/headshot.jpg" alt="Andre LaFountain">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about section-pad" id="about">
+  <div class="container">
+    <div class="about-image">
+      <img src="images/headshot.jpg" alt="Andre LaFountain">
+    </div>
+    <div class="about-content fade-up">
+      <span class="label">Meet Your Coach</span>
+      <h2 class="section-title">Andre<br>LaFountain</h2>
+      <p class="section-sub">With over 1,300 agents in his organization, Andre LaFountain has built one of the largest and most successful agent attraction teams at eXp Realty. Based in Punta Gorda, Florida, Andre brings real-world experience, proven systems, and a relentless commitment to helping agents build a business they're proud of.</p>
+      <ul class="about-list">
+        <li><span class="icon">★</span> eXp Realty Agent Attraction Leader — Punta Gorda, FL</li>
+        <li><span class="icon">★</span> Christ Centered Home Selling Team — Faith-driven leadership</li>
+        <li><span class="icon">★</span> Honey Badger Agents Community Partner</li>
+        <li><span class="icon">★</span> Proven track record of agent growth and retention</li>
+        <li><span class="icon">★</span> Hands-on coaching — not theory, but what works today</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- MILESTONES -->
+<section class="section-pad" id="milestones">
+  <div class="container" style="text-align:center;">
+    <span class="label">The Process</span>
+    <h2 class="section-title">Your Path to <span class="gold">Success</span></h2>
+    <p class="section-sub" style="margin:0 auto;">A step-by-step system designed to take you from where you are to where you want to be.</p>
+    <div class="milestones-grid">
+      <div class="milestone-card fade-up">
+        <div class="milestone-num">01</div>
+        <h3>Launch Your Funnel Ads</h3>
+        <p>We create, launch, and manage your lead generation ads so you can focus on converting. Our goal: help you consistently close 2–3 transactions per month with the lowest-cost, highest-quality leads.</p>
+      </div>
+      <div class="milestone-card fade-up">
+        <div class="milestone-num">02</div>
+        <h3>Build Your Brand</h3>
+        <p>We align your business to your higher purpose and build a personal brand that attracts your ideal client. Logo, bio, social presence — crafted to resonate with the people you want to serve.</p>
+      </div>
+      <div class="milestone-card fade-up">
+        <div class="milestone-num">03</div>
+        <h3>Content Strategy</h3>
+        <p>Never wonder what to post again. We deliver customized content templates and a done-for-you process for creating and posting across all platforms. Attract clients you love working with.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features section-pad" id="features">
+  <div class="container" style="text-align:center;">
+    <span class="label">What You Get</span>
+    <h2 class="section-title">Your Membership <span class="gold">Includes</span></h2>
+    <p class="section-sub" style="margin:0 auto;">Everything you need to build, grow, and scale your real estate business — all included at no additional cost or split.</p>
+    <div class="features-grid">
+      <div class="feature-card fade-up">
+        <div class="feature-icon">📞</div>
+        <h4>Direct Access to Andre</h4>
+        <p>Unlimited access to Andre LaFountain via phone for anything you need. Mentorship from someone who's in the trenches with you.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">🎯</div>
+        <h4>1-on-1 Coaching</h4>
+        <p>Personalized coaching sessions with Andre for a customized approach that fits your market, your strengths, and your goals.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">📢</div>
+        <h4>Done-For-You Ads</h4>
+        <p>Our team sets up your social media ads complete with automated follow-up sequences. We handle the tech so you can focus on selling.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">🎥</div>
+        <h4>Video Strategies</h4>
+        <p>Learn proven video methods used for 10+ years to attract clients and grow your team. We train you or your staff on what works.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">📊</div>
+        <h4>Weekly Live Calls</h4>
+        <p>Stay ahead with weekly training on what's working right now in today's market. Real strategies from agents doing real deals.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">📋</div>
+        <h4>Presentations & Tools</h4>
+        <p>Done-for-you listing and buyer presentations, plus cutting-edge tools and systems built by top-performing agents.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">🤖</div>
+        <h4>AI-Powered ISA</h4>
+        <p>Learn how to leverage AI as your Inside Sales Agent to maximize opportunities and scale without adding headcount.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">🏆</div>
+        <h4>Marketing Team Access</h4>
+        <p>Daily access to our marketing and implementation team. They handle the heavy lifting so you stay focused on clients.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">🔒</div>
+        <h4>Exclusive Mastermind</h4>
+        <p>Access to our closed Honey Badger Funnel Pilot & eXcelerate Mastermind. Learn from ICON agents practicing in today's market.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section-pad" id="pricing">
+  <div class="container" style="text-align:center;">
+    <span class="label">Choose Your Plan</span>
+    <h2 class="section-title">Invest in Your <span class="gold">Future</span></h2>
+    <p class="section-sub" style="margin:0 auto;">Flexible options to fit where you are right now. Both plans give you full access to the coaching inner circle.</p>
+    <div class="pricing-grid">
+      <div class="price-card fade-up">
+        <div class="price-label">Monthly Plan</div>
+        <div class="price-amount">$197 <span>/month</span></div>
+        <p style="color:var(--gray);font-size:0.88rem;margin-bottom:28px;">Full access, cancel anytime</p>
+        <ul class="price-features">
+          <li>Full access to all coaching content</li>
+          <li>Weekly live agent coaching calls</li>
+          <li>1-on-1 strategy sessions with Andre</li>
+          <li>Done-for-you ad campaigns</li>
+          <li>Content templates & brand kit</li>
+          <li>Mastermind community access</li>
+        </ul>
+        <a href="mailto:andrelafountain@gmail.com?subject=Monthly Membership" class="price-btn outline">Get Started</a>
+      </div>
+      <div class="price-card featured fade-up">
+        <div class="price-label">Annual Plan</div>
+        <div class="price-amount">$1,897 <span>/year</span></div>
+        <div class="price-save">Save $467/year</div>
+        <ul class="price-features">
+          <li>Everything in Monthly, plus:</li>
+          <li>Priority access to Andre's calendar</li>
+          <li>Advanced funnel setup & optimization</li>
+          <li>Premium listing presentations</li>
+          <li>More than 2 months FREE vs monthly</li>
+          <li>Dedicated onboarding session</li>
+        </ul>
+        <a href="mailto:andrelafountain@gmail.com?subject=Annual Membership" class="price-btn primary">Join Now →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials section-pad" id="testimonials">
+  <div class="container" style="text-align:center;">
+    <span class="label">Success Stories</span>
+    <h2 class="section-title">What Members <span class="gold">Say</span></h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card fade-up">
+        <div class="testimonial-stars">★★★★★</div>
+        <blockquote>"The coaching changed my entire approach to agent attraction. Within 6 months, I went from 0 to 8 agents in my organization. The systems, the accountability — it's unlike anything else out there."</blockquote>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">ST</div>
+          <div><div class="testimonial-name">Sarah Thompson</div><div class="testimonial-role">eXp Realty Agent, Tampa FL</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-up">
+        <div class="testimonial-stars">★★★★★</div>
+        <blockquote>"Andre doesn't just teach — he does. Having a coach who's actively building in today's market makes all the difference. The ad system alone paid for itself in the first week."</blockquote>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">MR</div>
+          <div><div class="testimonial-name">Mike Rodriguez</div><div class="testimonial-role">eXp Realty Agent, Orlando FL</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-up">
+        <div class="testimonial-stars">★★★★★</div>
+        <blockquote>"I was struggling to grow my team. Andre's program gave me the exact blueprint I needed. The content strategy and done-for-you ads completely transformed my business."</blockquote>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">JM</div>
+          <div><div class="testimonial-name">Jessica Martin</div><div class="testimonial-role">eXp Realty Agent, Naples FL</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section-pad" id="faq">
+  <div class="container" style="text-align:center;">
+    <span class="label">Questions</span>
+    <h2 class="section-title">Got <span class="gold">Questions?</span></h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q">What do I get in the coaching program? <span class="arrow">▾</span></button>
+        <div class="faq-a"><p>Full access to weekly live coaching calls, 1-on-1 sessions with Andre, done-for-you ad campaigns, content templates, brand building, video strategy training, AI ISA training, listing/buyer presentations, and our exclusive mastermind community.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Does it matter what organization or team I'm with at eXp? <span class="arrow">▾</span></button>
+        <div class="faq-a"><p>This program is designed for agents who are part of Andre's organization at eXp Realty or are looking to join. The coaching, tools, and support are provided at no additional cost or split beyond your standard eXp structure.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">I'm just starting and have zero in my downline. Is this for me? <span class="arrow">▾</span></button>
+        <div class="faq-a"><p>Absolutely. Many of our most successful members started from scratch. The system is designed to work whether you're brand new to agent attraction or already have a growing organization.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What if I can't afford it right now? <span class="arrow">▾</span></button>
+        <div class="faq-a"><p>We understand. That's why we offer a monthly option so you can get started without a large upfront commitment. Most members find the ROI covers the investment within their first month.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Why should I choose this over cheaper options? <span class="arrow">▾</span></button>
+        <div class="faq-a"><p>Many coaches and trainers aren't actively selling in today's market. Andre is in the trenches every day. You're getting battle-tested strategies from someone who's doing what they teach — not recycling theory from 10 years ago.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta section-pad">
+  <div class="container">
+    <span class="label">Ready to grow?</span>
+    <h2 class="section-title">Ready to Build<br><em style="font-family:'Playfair Display',serif;background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Like a Boss?</em></h2>
+    <p class="section-sub">Stop guessing. Start growing. Join Andre's coaching inner circle and get the systems, strategies, and support you need to build a massive organization.</p>
+    <a href="#pricing" class="btn-primary" style="margin-top:20px;">Join Now →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Andre LaFountain | eXp Realty | Punta Gorda, FL | <a href="tel:+19413101889">(941) 310-1889</a> | <a href="mailto:andrelafountain@gmail.com">andrelafountain@gmail.com</a></p>
+  <p style="margin-top:12px;">© 2026 Andre LaFountain. All rights reserved.</p>
+  <p style="margin-top:8px;font-size:0.7rem;color:#555;">NOT FACEBOOK™: This site is not a part of the Facebook™ website or Facebook Inc. Additionally, this site is NOT endorsed by Facebook™ in any way.</p>
+</footer>
+
+<script>
+// Nav scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Fade-up on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    document.querySelectorAll('.faq-item').forEach(i => { if(i !== item) i.classList.remove('open'); });
+    item.classList.toggle('open');
+  });
+});
+
+// Particles
+const pc = document.getElementById('particles');
+for(let i = 0; i < 12; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  const size = Math.random() * 200 + 50;
+  p.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*4}s;opacity:${Math.random()*0.3+0.1};`;
+  pc.appendChild(p);
+}
+
+// Smooth close mobile nav on link click
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.querySelector('.nav-links').classList.remove('open');
+    document.querySelector('.hamburger').classList.remove('active');
+  });
+});
+</script>
+</body>
+</html>
